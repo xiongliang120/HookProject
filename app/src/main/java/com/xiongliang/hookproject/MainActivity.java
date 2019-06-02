@@ -5,20 +5,29 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 
+import com.xiongliang.hookproject.hook.HooUtil;
+import com.xiongliang.hookproject.proxy.DynamicProxy;
+import com.xiongliang.hookproject.proxy.StaticProxy;
+
 public class MainActivity extends AppCompatActivity {
     private Button staticProxy;
     private Button dynamicProxy;
-
+    private Button hookActivityManagerNative;
+    private Button hookPackageManager;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        staticProxy = findViewById(R.id.staticProxy);
-        dynamicProxy = findViewById(R.id.dynamicProxy);
+        staticProxy = (Button) findViewById(R.id.staticProxy);
+        dynamicProxy = (Button) findViewById(R.id.dynamicProxy);
+        hookActivityManagerNative = (Button) findViewById(R.id.hookActivityManagerNative);
+        hookPackageManager = (Button) findViewById(R.id.hookPackageManager);
 
         staticProxy.setOnClickListener(clickListener);
         dynamicProxy.setOnClickListener(clickListener);
+        hookActivityManagerNative.setOnClickListener(clickListener);
+        hookPackageManager.setOnClickListener(clickListener);
     }
 
     private View.OnClickListener clickListener = new View.OnClickListener() {
@@ -31,6 +40,12 @@ public class MainActivity extends AppCompatActivity {
                     break;
                 case R.id.dynamicProxy:
                     testDynamicProxy();
+                    break;
+                case R.id.hookActivityManagerNative:
+                    testHookActivityManagerNativve();
+                    break;
+                case R.id.hookPackageManager:
+                    testHookPackageManager();
                     break;
                 default:
                     break;
@@ -54,5 +69,20 @@ public class MainActivity extends AppCompatActivity {
     public void testDynamicProxy(){
         DynamicProxy dynamicProxy = new DynamicProxy();
         dynamicProxy.proxy();
+    }
+
+
+    /**
+     *  hook ActivityManaggerNativve
+     */
+    public void testHookActivityManagerNativve(){
+        HooUtil.hookActivityManagerNative();
+    }
+
+    /**
+     * hook  PackageManager
+     */
+    public void testHookPackageManager(){
+        HooUtil.hookPackageManager(this);
     }
 }

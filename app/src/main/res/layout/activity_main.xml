@@ -21,5 +21,18 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="动态代理"/>
+
+
+        <Button
+            android:id="@+id/hookActivityManagerNative"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="对 ActivityManagerNativeHook"/>
+
+        <Button
+            android:id="@+id/hookPackageManager"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="对 PackageManager Hook"/>
     </LinearLayout>
 </android.support.constraint.ConstraintLayout>
