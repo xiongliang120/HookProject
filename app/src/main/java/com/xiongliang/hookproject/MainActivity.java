@@ -1,5 +1,7 @@
 package com.xiongliang.hookproject;
 
+import android.content.Intent;
+import android.net.Uri;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -77,6 +79,12 @@ public class MainActivity extends AppCompatActivity {
      */
     public void testHookActivityManagerNativve(){
         HooUtil.hookActivityManagerNative();
+
+        // 测试AMS HOOK (调用其相关方法)
+        Uri uri = Uri.parse("http://wwww.baidu.com");
+        Intent t = new Intent(Intent.ACTION_VIEW);
+        t.setData(uri);
+        startActivity(t);
     }
 
     /**

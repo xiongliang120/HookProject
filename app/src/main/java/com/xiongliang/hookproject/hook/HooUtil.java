@@ -12,13 +12,13 @@ import java.lang.reflect.Method;
 import java.lang.reflect.Proxy;
 
 /**
- *  ActivityManagerNative 在sdk 26及以下
+ *  ActivityManagerNative 在sdk 25及以下的模拟上才能hook 到
  */
 public class HooUtil {
     public static void hookActivityManagerNative(){
         try{
             Object gDefault = ReflectUtil.getStaticFieldObject("android.app.ActivityManagerNative","gDefault");
-            Object  activityManager = ReflectUtil.getFieldObject("android.util.Sington",gDefault,"mInstance");
+            Object  activityManager = ReflectUtil.getFieldObject("android.util.Singleton",gDefault,"mInstance");
 
             Class<?> activityManagerInterface = Class.forName("android.app.IActivityManager");
             Object proxy = Proxy.newProxyInstance(Thread.currentThread().getContextClassLoader(),
