@@ -34,17 +34,20 @@ public class HooUtil {
 
     public static void hookPackageManager(Context context){
         try{
-            Object currentActivityThread = ReflectUtil.getStaticFieldObject("android.app.ActivityThread","currentActivityThread");
+            Object currentActivityThread = ReflectUtil.getStaticFieldObject("android.app.ActivityThread","sCurrentActivityThread");
             Object sPackageManager = ReflectUtil.getFieldObject("android.app.ActivityThread",currentActivityThread,"sPackageManager");
 
             Class<?> iPackageManagerInterface = Class.forName("android.content.pm.IPackageManager");
             Object proxy = Proxy.newProxyInstance(iPackageManagerInterface.getClassLoader(),new Class<?>[]{iPackageManagerInterface},
                     new HookHandler(sPackageManager));
 
-            ReflectUtil.setFileObject("android.content.pm.IPackageManager",sPackageManager,"sPackageManager",proxy);
-            PackageManager pm = context.getPackageManager();
 
-            ReflectUtil.setFileObject("android.content.pm.IPackageManager",pm,"mPM",proxy);
+            // 1. 替换掉ActivityThread里面的 sPackageManager 字段
+            ReflectUtil.setFileObject("android.app.ActivityThread",currentActivityThread, "sPackageManager", proxy);
+
+            //替换 ApplicationPackageManager里面的 mPm对象
+            PackageManager pm = context.getPackageManager();
+            ReflectUtil.setFileObject("android.app.ApplicationPackageManager",pm,"mPM",proxy);
 
 
         }catch (Exception e){

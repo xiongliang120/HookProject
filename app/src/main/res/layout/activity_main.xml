@@ -27,12 +27,28 @@
             android:id="@+id/hookActivityManagerNative"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:textAllCaps="false"
             android:text="对 ActivityManagerNativeHook"/>
 
         <Button
             android:id="@+id/hookPackageManager"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:textAllCaps="false"
             android:text="对 PackageManager Hook"/>
+
+        <Button
+            android:id="@+id/mInstrumentationHook"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAllCaps="false"
+            android:text="对 StartActivty的 mInstrumentaion变量进行Hook"/>
+
+        <Button
+            android:id="@+id/mHCallBackHook"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAllCaps="false"
+            android:text="对 ActivityThread的mH 进行callback"/>
     </LinearLayout>
 </android.support.constraint.ConstraintLayout>

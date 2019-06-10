@@ -117,6 +117,26 @@ public class ReflectUtil {
         }
     }
 
+
+    /**
+     * 反射设置实例字段值
+     * @param obj
+     * @param fieldName
+     * @param fieldValue
+     */
+    public static void setFileObject(Class mClass,Object obj, String fieldName, Object fieldValue){
+        try{
+            Field field = mClass.getDeclaredField(fieldName);
+            field.setAccessible(true);
+            field.set(obj,fieldValue);
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+    }
+
+
+
+
     /**
      * 反射设置静态字段值
      * @param className

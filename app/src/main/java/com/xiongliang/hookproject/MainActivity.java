@@ -8,6 +8,7 @@ import android.view.View;
 import android.widget.Button;
 
 import com.xiongliang.hookproject.hook.HooUtil;
+import com.xiongliang.hookproject.hook.HookStartActivityUtil;
 import com.xiongliang.hookproject.proxy.DynamicProxy;
 import com.xiongliang.hookproject.proxy.StaticProxy;
 
@@ -16,6 +17,9 @@ public class MainActivity extends AppCompatActivity {
     private Button dynamicProxy;
     private Button hookActivityManagerNative;
     private Button hookPackageManager;
+    private Button hoookmInstrumentation;
+    private Button hookmHCallback;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -25,11 +29,15 @@ public class MainActivity extends AppCompatActivity {
         dynamicProxy = (Button) findViewById(R.id.dynamicProxy);
         hookActivityManagerNative = (Button) findViewById(R.id.hookActivityManagerNative);
         hookPackageManager = (Button) findViewById(R.id.hookPackageManager);
+        hoookmInstrumentation = (Button) findViewById(R.id.mInstrumentationHook);
+        hookmHCallback = (Button) findViewById(R.id.mHCallBackHook);
 
         staticProxy.setOnClickListener(clickListener);
         dynamicProxy.setOnClickListener(clickListener);
         hookActivityManagerNative.setOnClickListener(clickListener);
         hookPackageManager.setOnClickListener(clickListener);
+        hoookmInstrumentation.setOnClickListener(clickListener);
+        hookmHCallback.setOnClickListener(clickListener);
     }
 
     private View.OnClickListener clickListener = new View.OnClickListener() {
@@ -48,6 +56,12 @@ public class MainActivity extends AppCompatActivity {
                     break;
                 case R.id.hookPackageManager:
                     testHookPackageManager();
+                    break;
+                case R.id.mInstrumentationHook:
+                    testHookmInstrumentation();
+                    break;
+                case R.id.mHCallBackHook:
+                    testHookmHCallback();
                     break;
                 default:
                     break;
@@ -92,5 +106,24 @@ public class MainActivity extends AppCompatActivity {
      */
     public void testHookPackageManager(){
         HooUtil.hookPackageManager(this);
+        getPackageManager().getInstalledApplications(0);
+    }
+
+    /**
+     * 对Activity的mInstrumentation 变量进行hook
+     */
+    public void testHookmInstrumentation(){
+        HookStartActivityUtil.hookInstrumentationFieldInActivity(this);
+        Intent intent = new Intent(this,NextActivity.class);
+        startActivity(intent);
+    }
+
+    /**
+     * 对 Activity的mH hook 的mCallback 进行hook
+     */
+    public void testHookmHCallback(){
+         HookStartActivityUtil.hookActivityThreadmH();
+        Intent intent = new Intent(this,NextActivity.class);
+        startActivity(intent);
     }
 }

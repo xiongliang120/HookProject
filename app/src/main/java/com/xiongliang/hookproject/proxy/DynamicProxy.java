@@ -12,20 +12,16 @@ public class DynamicProxy {
            Subject subjectProxy = (Subject) Proxy.newProxyInstance(subject.getClass().getClassLoader(),
                    subject.getClass().getInterfaces(),
                    new InvocationHandlerImpl(subject));
-
            subjectProxy.request();
        }
 
        public class InvocationHandlerImpl implements InvocationHandler{
            private Subject target;
-
            public InvocationHandlerImpl(Subject subject){
                this.target = subject;
            }
-
            @Override
            public Object invoke(Object o, Method method, Object[] objects) throws Throwable {
-               Log.i("msg","invoke 方法调用");
                Object obj = method.invoke(target,objects); //反射调用方法
                return obj;
            }
